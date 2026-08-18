@@ -1,0 +1,142 @@
+[
+  {
+    "study": "qwen_seed42",
+    "condition": "vector_a_guard_off",
+    "source_label": "vector_a_undefended",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "qwen_seed42",
+    "condition": "vector_a_guard_on",
+    "source_label": "vector_a_defended",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "qwen_seed43",
+    "condition": "vector_a_guard_off",
+    "source_label": "seed_43/vector_a_undefended",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "qwen_seed43",
+    "condition": "vector_a_guard_on",
+    "source_label": "seed_43/vector_a_defended",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "qwen_seed44",
+    "condition": "vector_a_guard_off",
+    "source_label": "seed_44/vector_a_undefended",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "qwen_seed44",
+    "condition": "vector_a_guard_on",
+    "source_label": "seed_44/vector_a_defended",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "full_suite_seed42",
+    "condition": "vector_a_guard_off",
+    "source_label": "full/seed_42/vector_a_undefended",
+    "task_records": 121,
+    "has_phase_summary": true
+  },
+  {
+    "study": "full_suite_seed42",
+    "condition": "vector_a_guard_on",
+    "source_label": "full/seed_42/vector_a_defended",
+    "task_records": 121,
+    "has_phase_summary": true
+  },
+  {
+    "study": "gemma2_analyst_seed42",
+    "condition": "vector_a_guard_off",
+    "source_label": "vector_a_undefended_analyst_gemma2_27b",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "gemma2_analyst_seed42",
+    "condition": "vector_a_guard_on",
+    "source_label": "vector_a_defended_analyst_gemma2_27b",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "deepseek_generator_seed42",
+    "condition": "vector_a_guard_off",
+    "source_label": "vector_a_undefended_generator_deepseek_coder_v2_16b",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "deepseek_generator_seed42",
+    "condition": "vector_a_guard_on",
+    "source_label": "vector_a_defended_generator_deepseek_coder_v2_16b",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "devstral_generator_seed42",
+    "condition": "vector_a_guard_off",
+    "source_label": "vector_a_undefended_generator_devstral_24b",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "devstral_generator_seed42",
+    "condition": "vector_a_guard_on",
+    "source_label": "vector_a_defended_generator_devstral_24b",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "vec_b_candidate_seed42",
+    "condition": "guard_b_off_candidate",
+    "source_label": "vector_b_guarda_only",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "vec_b_candidate_seed42",
+    "condition": "guard_b_on_candidate",
+    "source_label": "both_vectors_defended",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "normal_operation_seed42",
+    "condition": "qwen_primary",
+    "source_label": "baseline",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "normal_operation_seed42",
+    "condition": "gemma2_analyst",
+    "source_label": "baseline_analyst_gemma2_27b",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "normal_operation_seed42",
+    "condition": "deepseek_generator",
+    "source_label": "baseline_generator_deepseek_coder_v2_16b",
+    "task_records": 35,
+    "has_phase_summary": true
+  },
+  {
+    "study": "normal_operation_seed42",
+    "condition": "devstral_generator",
+    "source_label": "baseline_generator_devstral_24b",
+    "task_records": 35,
+    "has_phase_summary": true
+  }
+]

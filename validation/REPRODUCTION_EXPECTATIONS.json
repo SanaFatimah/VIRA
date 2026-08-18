@@ -1,0 +1,10 @@
+{
+  "seed_42": {"off": [12, 17], "on": [1, 17], "mcnemar": 0.0009765625, "holm": 0.0029296875},
+  "seed_43": {"off": [6, 16], "on": [3, 16], "mcnemar": 0.25, "holm": 0.25},
+  "seed_44": {"off": [8, 15], "on": [2, 15], "mcnemar": 0.03125, "holm": 0.0625},
+  "full_suite": {"off": [33, 55], "on": [5, 55], "mcnemar": 7.450580596923828e-09},
+  "gemma2_analyst": {"off": [11, 16], "on": [1, 16], "mcnemar": 0.001953125, "holm": 0.001953125},
+  "deepseek_generator": {"off": [12, 25], "on": [5, 25], "mcnemar": 0.015625, "holm": 0.015625},
+  "devstral_generator": {"off": [13, 25], "on": [3, 25], "mcnemar": 0.001953125, "holm": 0.00390625},
+  "vec_b_candidate": {"off": [5, 13], "on": [1, 17], "common_reachable": 13, "mcnemar": 0.125}
+}

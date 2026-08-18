@@ -1,0 +1,67 @@
+{
+  "hardware": {
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "execution": "sequential",
+    "energy_or_utilization_recorded": false
+  },
+  "runtime": {
+    "ollama": true,
+    "context_length_used": 8192,
+    "keep_alive": "24h",
+    "docker_version": "24.0.5",
+    "max_iterations": 5,
+    "cvss_threshold": 7.0
+  },
+  "models": {
+    "primary_generator": {
+      "tag": "qwen3-coder-next:q4_K_M",
+      "parameters": "79.7B",
+      "quantization": "Q4_K_M",
+      "temperature": 0.7,
+      "recorded_gpu_layers": 20
+    },
+    "deepseek_generator": {
+      "tag": "deepseek-coder-v2:16b",
+      "parameters": "15.7B",
+      "quantization": "Q4_0",
+      "temperature": 0.7,
+      "recorded_gpu_layers": 99
+    },
+    "devstral_generator": {
+      "tag": "devstral:24b",
+      "parameters": "23.6B",
+      "quantization": "Q4_K_M",
+      "temperature": 0.7,
+      "recorded_gpu_layers": 99
+    },
+    "primary_analyst_and_attacker_base": {
+      "tag": "qwen3:32b",
+      "parameters": "32.8B",
+      "quantization": "Q4_K_M",
+      "native_context_length": 40960,
+      "analyst_temperature": 0.1,
+      "attacker_temperature": 0.85,
+      "recorded_gpu_layers": 99
+    },
+    "gemma2_analyst": {
+      "tag": "gemma2:27b",
+      "parameters": "27.2B",
+      "quantization": "Q4_0",
+      "native_context_length": 8192,
+      "temperature": 0.1,
+      "recorded_gpu_layers": 99
+    }
+  },
+  "docker_sandbox": {
+    "python_image": "python:3.12-slim",
+    "network": "none",
+    "memory": "512m",
+    "cpus": "0.5",
+    "tmpfs": "/tmp:size=128m",
+    "container_lifecycle": "docker run --rm"
+  },
+  "notes": [
+    "The configurations differ in model size, quantization, and GPU offload; comparisons are configuration comparisons, not isolated model-family effects.",
+    "No GPU utilization, energy, or monetary-cost measurements were recorded."
+  ]
+}

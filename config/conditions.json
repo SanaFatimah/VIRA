@@ -1,0 +1,45 @@
+{
+  "baseline": {
+    "vector_a": "off",
+    "vector_b": "off",
+    "guard_a": true,
+    "guard_b": true
+  },
+  "vector_a_guard_off": {
+    "vector_a": "on",
+    "vector_b": "off",
+    "guard_a": false,
+    "guard_b": true
+  },
+  "vector_a_guard_on": {
+    "vector_a": "on",
+    "vector_b": "off",
+    "guard_a": true,
+    "guard_b": true
+  },
+  "vector_b_guard_off": {
+    "vector_a": "off",
+    "vector_b": "on",
+    "guard_a": true,
+    "guard_b": false
+  },
+  "vector_b_guard_on": {
+    "vector_a": "off",
+    "vector_b": "on",
+    "guard_a": true,
+    "guard_b": true
+  },
+  "vec_b_candidate_guard_off": {
+    "vector_a": "off",
+    "vector_b": "on",
+    "guard_a": true,
+    "guard_b": false
+  },
+  "vec_b_candidate_guard_on": {
+    "vector_a": "on",
+    "vector_b": "on",
+    "guard_a": true,
+    "guard_b": true,
+    "warning": "This candidate differs in both Guard B and Vector A activation; it is diagnostic, not an isolated Guard-B comparison."
+  }
+}
