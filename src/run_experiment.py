@@ -1,5 +1,5 @@
 """
-ATMG Prompt-Injection Experiment Runner
+VIRA Prompt-Injection Experiment Runner
 ========================================
 2×2 design — 5 conditions × 35 SecurityEval tasks.
 

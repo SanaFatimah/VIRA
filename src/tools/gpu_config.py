@@ -27,9 +27,9 @@ def get_num_gpu() -> int:
        8 000-18 000  -> partial   (40 layers, rest on CPU)
       < 8 000        -> CPU only  (0)
 
-    Override with env ATMG_NUM_GPU (e.g. ATMG_NUM_GPU=0 for CPU-only).
+    Override with env VIRA_NUM_GPU (e.g. VIRA_NUM_GPU=0 for CPU-only).
     """
-    env_override = os.environ.get("ATMG_NUM_GPU")
+    env_override = os.environ.get("VIRA_NUM_GPU")
     if env_override is not None:
         try:
             return int(env_override)
@@ -73,7 +73,7 @@ _MODEL_GPU_FIXED = {
 
 def _num_ctx() -> int:
     """Return Ollama context size. Smaller context allows more GPU offload."""
-    raw = os.environ.get("ATMG_NUM_CTX", "8192")
+    raw = os.environ.get("VIRA_NUM_CTX", "8192")
     try:
         return int(raw)
     except ValueError:
@@ -100,8 +100,8 @@ def ollama_chat(model: str, messages: list, options: dict, keep_alive="24h") -> 
     """
     global _NUM_GPU
 
-    if os.environ.get("ATMG_NO_FALLBACK"):
-        gpu_val = _MODEL_GPU_FIXED.get(model, int(os.environ.get("ATMG_NUM_GPU", 99)))
+    if os.environ.get("VIRA_NO_FALLBACK"):
+        gpu_val = _MODEL_GPU_FIXED.get(model, int(os.environ.get("VIRA_NUM_GPU", 99)))
         opts = {**options, "num_gpu": gpu_val, "num_ctx": _num_ctx()}
         print(f"[GPU] {model} using fixed num_gpu={gpu_val}, num_ctx={opts['num_ctx']} (no fallback)")
         result = _ollama.chat(model=model, messages=messages,
@@ -112,7 +112,7 @@ def ollama_chat(model: str, messages: list, options: dict, keep_alive="24h") -> 
 
     start = _MODEL_GPU.get(model)
     if start is None:
-        start = int(os.environ.get("ATMG_NUM_GPU", num_gpu()))
+        start = int(os.environ.get("VIRA_NUM_GPU", num_gpu()))
     ladder = [v for v in _GPU_FALLBACK if v <= start] or [0]
 
     last_exc = None

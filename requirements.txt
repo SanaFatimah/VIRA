@@ -1,4 +1,4 @@
-# Core ATMG runtime dependencies.
+# Core VIRA runtime dependencies.
 #
 # This file intentionally lists Python package dependencies only. External
 # tools such as Ollama, Docker, CodeQL, CUDA/NVIDIA drivers, and local model

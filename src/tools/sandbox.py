@@ -51,7 +51,7 @@ def run_in_sandbox(
             "language":  language
         }
 
-    temp_dir = tempfile.mkdtemp(prefix="atmg_sandbox_")
+    temp_dir = tempfile.mkdtemp(prefix="vira_sandbox_")
 
     try:
         if lang == "python":

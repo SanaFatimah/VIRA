@@ -1,7 +1,7 @@
-# ATMG IST Anonymous Replication Artifact
+# VIRA IST Anonymous Replication Artifact
 
 This package is a journal-specific, anonymous replication artifact for the
-ATMG manuscript. It is independent of earlier conference artifacts and contains
+VIRA manuscript. It is independent of earlier conference artifacts and contains
 no repository history, author metadata, institutional metadata, or upload URL.
 
 ## Fast reproduction of the reported statistics
@@ -51,7 +51,7 @@ config/         conditions, model/runtime metadata, Manipulator templates
 data/           exact 35- and 121-task lists plus sanitized task records
 docker/         sandbox image/configuration material
 docs/           prompt and data documentation
-src/            ATMG agents, guards, Manipulators, pipeline, and tools
+src/            VIRA agents, guards, Manipulators, pipeline, and tools
 validation/     record-validation and anonymity-audit material
 ```
 
@@ -97,7 +97,7 @@ environment:
 ```bash
 python3 -m venv .venv
 .venv/bin/pip install -r requirements.txt
-docker build -f docker/Dockerfile.python-sandbox -t atmg-python-sandbox .
+docker build -f docker/Dockerfile.python-sandbox -t vira-python-sandbox .
 export CODEQL_BIN=/path/to/codeql
 ```
 

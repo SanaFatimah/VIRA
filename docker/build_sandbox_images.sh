@@ -1,17 +1,17 @@
 #!/bin/bash
-# Build ATMG sandbox Docker images with pre-installed dependencies
+# Build VIRA sandbox Docker images with pre-installed dependencies
 
 set -e
 
-echo "Building ATMG Python sandbox image..."
-docker build -t atmg-python-sandbox:latest -f Dockerfile.python-sandbox .
+echo "Building VIRA Python sandbox image..."
+docker build -t vira-python-sandbox:latest -f Dockerfile.python-sandbox .
 
 echo ""
 echo "✓ Build complete!"
 echo ""
 echo "Images built:"
-docker images | grep atmg-python-sandbox
+docker images | grep vira-python-sandbox
 
 echo ""
 echo "To use in sandbox.py, change line 8 to:"
-echo '    "python": "atmg-python-sandbox:latest",'
+echo '    "python": "vira-python-sandbox:latest",'

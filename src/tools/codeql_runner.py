@@ -67,8 +67,8 @@ def maybe_wrap_for_codeql(code: str, language: str) -> str:
         ]
         args_str = ", ".join(f'request.args.get("{p}")' for p in param_names) if param_names else ""
         routes.append(f"""
-@_atmg_app.route("/atmg_entry_{i}")
-def _atmg_entry_{i}():
+@_vira_app.route("/vira_entry_{i}")
+def _vira_entry_{i}():
     try:
         return str({name}({args_str}))
     except Exception as e:
@@ -78,11 +78,11 @@ def _atmg_entry_{i}():
     if not routes:
         return code
 
-    return code + "\n\nfrom flask import Flask, request\n_atmg_app = Flask(__name__)\n" + "".join(routes)
+    return code + "\n\nfrom flask import Flask, request\n_vira_app = Flask(__name__)\n" + "".join(routes)
 
 
 def run_codeql_scan(code: str, language: str) -> list:
-    """CodeQL Runner for ATMG Phase 3 — Tier 1 static confirmation."""
+    """CodeQL Runner for VIRA Phase 3 — Tier 1 static confirmation."""
     findings = []
 
     if not code or len(code.strip()) < 10:
@@ -90,9 +90,9 @@ def run_codeql_scan(code: str, language: str) -> list:
 
     ql_lang = "python"
     temp_id = int(time.time() * 1000)
-    source_dir = tempfile.mkdtemp(prefix=f"atmg_src_{temp_id}_")
-    db_dir = tempfile.mkdtemp(prefix=f"atmg_db_{temp_id}_")
-    sarif_file = f"/tmp/atmg_scan_{temp_id}.sarif"
+    source_dir = tempfile.mkdtemp(prefix=f"vira_src_{temp_id}_")
+    db_dir = tempfile.mkdtemp(prefix=f"vira_db_{temp_id}_")
+    sarif_file = f"/tmp/vira_scan_{temp_id}.sarif"
     filename = "app.py"
 
     try:

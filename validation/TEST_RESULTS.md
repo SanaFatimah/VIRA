@@ -7,7 +7,7 @@ Tests were run on 2026-08-18 from a clean output directory.
 Command:
 
 ```bash
-python3 analysis/reproduce_results.py --verify --outdir /tmp/atmg-ist-reproduction-test
+python3 analysis/reproduce_results.py --verify --outdir /tmp/vira-ist-reproduction-test
 ```
 
 Result:

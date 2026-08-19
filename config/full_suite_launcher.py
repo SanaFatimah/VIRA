@@ -64,8 +64,8 @@ def run_condition(condition: str, log_name: str) -> None:
 def main() -> None:
     os.chdir(ROOT)
     LOG_DIR.mkdir(parents=True, exist_ok=True)
-    os.environ["ATMG_NUM_GPU"] = "99"
-    os.environ["ATMG_NO_FALLBACK"] = "1"
+    os.environ["VIRA_NUM_GPU"] = "99"
+    os.environ["VIRA_NO_FALLBACK"] = "1"
     os.environ["OLLAMA_KEEP_ALIVE"] = "24h"
     os.environ["OLLAMA_MAX_LOADED_MODELS"] = "2"
 

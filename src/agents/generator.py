@@ -86,7 +86,7 @@ def generate_code(
     if patch_feedback is not None:
         patch_feedback, guard_b_stripped = validate_patch_feedback(patch_feedback, guard_b)
 
-    system_prompt = """You are a code generator agent in the ATMG pipeline.
+    system_prompt = """You are a code generator agent in the VIRA pipeline.
 
 Role: take a spec and produce realistic functional source code like a normal developer.
 Functional first, not over-engineered. Do NOT add unnecessary security ceremony.

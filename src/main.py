@@ -151,7 +151,7 @@ def safe_model_name(model_name: str) -> str:
     return re.sub(r"[^A-Za-z0-9]+", "_", model_name).strip("_").lower()
 
 
-class ATMGState(TypedDict):
+class VIRAState(TypedDict):
     spec: str
     language: str
     generated_code: Optional[str]
@@ -193,7 +193,7 @@ class ATMGState(TypedDict):
     guard_b_stripped: Optional[List[dict]]
 
 
-def generator_node(state: ATMGState) -> dict:
+def generator_node(state: VIRAState) -> dict:
     print(f"\n{'='*60}")
     print(f"GENERATOR AGENT — Iteration {state['iteration'] + 1}")
     print(f"{'='*60}")
@@ -263,7 +263,7 @@ def generator_node(state: ATMGState) -> dict:
     }
 
 
-def attacker_node(state: ATMGState) -> dict:
+def attacker_node(state: VIRAState) -> dict:
     print(f"\n{'='*60}")
     print(f"ATTACKER AGENT — Iteration {state['iteration'] + 1}")
     print(f"{'='*60}")
@@ -288,7 +288,7 @@ def attacker_node(state: ATMGState) -> dict:
     return {"attacks": attacks, "attack_raw": raw}
 
 
-def codeql_node(state: ATMGState) -> dict:
+def codeql_node(state: VIRAState) -> dict:
     print(f"\n{'='*60}")
     print(f"CODEQL TIER 1 — Iteration {state['iteration'] + 1}")
     print(f"{'='*60}")
@@ -317,7 +317,7 @@ def codeql_node(state: ATMGState) -> dict:
     return {"codeql_results": codeql_results}
 
 
-def sandbox_node(state: ATMGState) -> dict:
+def sandbox_node(state: VIRAState) -> dict:
     print(f"\n{'='*60}")
     print(f"SANDBOX TIER 2 — Iteration {state['iteration'] + 1}")
     print(f"{'='*60}")
@@ -377,7 +377,7 @@ def sandbox_node(state: ATMGState) -> dict:
     return {"attacks": all_attacks, "injection_logs": injection_logs}
 
 
-def analyst_node(state: ATMGState) -> dict:
+def analyst_node(state: VIRAState) -> dict:
     print(f"\n{'='*60}")
     print(f"ANALYST AGENT — Iteration {state['iteration'] + 1}")
     print(f"{'='*60}")
@@ -501,7 +501,7 @@ def analyst_node(state: ATMGState) -> dict:
     }
 
 
-def convergence_node(state: ATMGState) -> dict:
+def convergence_node(state: VIRAState) -> dict:
     report    = state.get("report") or {}
     raw_cvss  = state.get("max_cvss")          # may be None on parse error
     iteration = state.get("iteration", 0)
@@ -593,7 +593,7 @@ def convergence_node(state: ATMGState) -> dict:
             "stop_reason": None, "stagnation_detected": stagnation_detected,
             "regression_detected_loop": regression_detected_loop}
 
-def route_after_convergence(state: ATMGState) -> str:
+def route_after_convergence(state: VIRAState) -> str:
     # Save whenever: genuinely clean, below threshold, early exit, or out of budget
     if state.get("is_clean") or state.get("below_threshold"):
         return "save"
@@ -605,14 +605,14 @@ def route_after_convergence(state: ATMGState) -> str:
 
 
 def _append_to_dataset(state: dict) -> None:
-    excel_path = "data/ATMG_C_dataset.xlsx"
+    excel_path = "data/VIRA_C_dataset.xlsx"
     if os.path.exists(excel_path):
         wb = load_workbook(excel_path)
         ws = wb.active
     else:
         wb = openpyxl.Workbook()
         ws = wb.active
-        ws.title = "ATMG-C"
+        ws.title = "VIRA-C"
         ws.append([
             "Timestamp", "Run ID", "Spec", "Language", "Iterations",
             "Initial CVSS", "Final CVSS", "CVSS Reduction", "Is Clean", "Converged",
@@ -681,9 +681,9 @@ def _append_to_dataset(state: dict) -> None:
     print(f"  Dataset updated: {excel_path}")
 
 
-def save_node(state: ATMGState) -> dict:
+def save_node(state: VIRAState) -> dict:
     print(f"\n{'='*60}")
-    print(f"SAVING RECORD TO ATMG-C")
+    print(f"SAVING RECORD TO VIRA-C")
     print(f"{'='*60}")
 
     run_id = state.get("run_id", f"run_{int(time.time())}")
@@ -746,7 +746,7 @@ def save_node(state: ATMGState) -> dict:
 
 
 def build_graph():
-    graph = StateGraph(ATMGState)
+    graph = StateGraph(VIRAState)
     graph.add_node("generator",   generator_node)
     graph.add_node("attacker",    attacker_node)
     graph.add_node("codeql",      codeql_node)
@@ -822,7 +822,7 @@ def make_initial_state(
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Run the ATMG pipeline.")
+    parser = argparse.ArgumentParser(description="Run the VIRA pipeline.")
     parser.add_argument("--task", help="Run only the task with this task_id.")
     parser.add_argument("--tasks", help="Run a comma-separated list of task_ids.")
     parser.add_argument("--task-set", choices=["stratified", "full"], default="stratified",
@@ -886,7 +886,7 @@ if __name__ == "__main__":
         if not indexed_tasks:
             raise SystemExit(f"--start-at {args.start_at} is beyond the task count ({len(B_SPECS)}).")
   
-    TEST_MODE = os.environ.get("ATMG_TEST") == "1"
+    TEST_MODE = os.environ.get("VIRA_TEST") == "1"
     if TEST_MODE and not args.task:
         indexed_tasks = indexed_tasks[:3]
     total = len(indexed_tasks)
@@ -916,7 +916,7 @@ if __name__ == "__main__":
     results_summary = []
 
     print("\n" + "="*60)
-    print(f"ATMG PHASE 4 — FULL EVALUATION (SecurityEval — all {task_set_size})")
+    print(f"VIRA PHASE 4 — FULL EVALUATION (SecurityEval — all {task_set_size})")
     print(f"Tasks: {total} | Max iterations: {MAX_ITERATIONS} | CVSS threshold: {CVSS_THRESHOLD}")
     if args.start_at > 1 and not args.task:
         print(f"Resume start index: {args.start_at}")

@@ -37,7 +37,7 @@ def analyse_vulnerabilities(
         clean_report = _build_clean_report()
         return clean_report, json.dumps(clean_report)
 
-    system_prompt = """You are a security analyst agent in the ATMG pipeline.
+    system_prompt = """You are a security analyst agent in the VIRA pipeline.
 
 Your role: VERIFY evidence from the Attacker, CodeQL, and Sandbox.
 You are a VERIFIER, NOT an AUDITOR.

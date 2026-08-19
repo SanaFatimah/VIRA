@@ -1,4 +1,4 @@
-# ATMG Python Sandbox - Pre-installed with security testing dependencies
+# VIRA Python Sandbox - Pre-installed with security testing dependencies
 FROM python:3.12-slim
 
 # Install common vulnerable code dependencies

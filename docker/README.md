@@ -1,4 +1,4 @@
-# ATMG Sandbox Docker Images
+# VIRA Sandbox Docker Images
 
 ## Quick Setup (Fixes Python import errors & pip timeout)
 
@@ -9,7 +9,7 @@ cd docker
 ./build_sandbox_images.sh
 ```
 
-This builds `atmg-python-sandbox:latest` with all dependencies pre-installed:
+This builds `vira-python-sandbox:latest` with all dependencies pre-installed:
 - bcrypt, flask, requests, sqlalchemy
 - cryptography, passlib, pyjwt
 - argon2-cffi, werkzeug
@@ -17,12 +17,12 @@ This builds `atmg-python-sandbox:latest` with all dependencies pre-installed:
 ### 2. Verify Image Built
 
 ```bash
-docker images | grep atmg-python-sandbox
+docker images | grep vira-python-sandbox
 ```
 
 Expected output:
 ```
-atmg-python-sandbox   latest   xxxxx   X minutes ago   XXX MB
+vira-python-sandbox   latest   xxxxx   X minutes ago   XXX MB
 ```
 
 ### 3. Run Your Pipeline
@@ -44,7 +44,7 @@ The sandbox will **automatically detect** and use the pre-built image!
 - ❌ Timeout errors
 - ❌ Total per-iteration: **4-5 minutes**
 
-### After (using atmg-python-sandbox:latest):
+### After (using vira-python-sandbox:latest):
 - ✅ No pip install needed: **instant**
 - ✅ All packages pre-installed
 - ✅ No network required
@@ -58,19 +58,19 @@ The sandbox will **automatically detect** and use the pre-built image!
 
 Check if image exists:
 ```bash
-docker images atmg-python-sandbox:latest
+docker images vira-python-sandbox:latest
 ```
 
 If missing, rebuild:
 ```bash
 cd docker
-docker build -t atmg-python-sandbox:latest -f Dockerfile.python-sandbox .
+docker build -t vira-python-sandbox:latest -f Dockerfile.python-sandbox .
 ```
 
 ### To force rebuild:
 
 ```bash
-docker rmi atmg-python-sandbox:latest
+docker rmi vira-python-sandbox:latest
 ./build_sandbox_images.sh
 ```
 
@@ -79,7 +79,7 @@ docker rmi atmg-python-sandbox:latest
 ## What Changed in sandbox.py
 
 The code now:
-1. Checks if `atmg-python-sandbox:latest` exists (lines 7-14)
+1. Checks if `vira-python-sandbox:latest` exists (lines 7-14)
 2. Uses custom image if found, otherwise falls back to base image
 3. Skips pip install when using custom image (lines 145-160)
 4. Reduces timeout from 90s → 30s for pre-built image

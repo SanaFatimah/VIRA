@@ -55,7 +55,7 @@ in a genuinely NEW location with a NEW exploitation path."""
     else:
         exclusion_block = "\nNo CWEs excluded — fresh analysis."
 
-    system_prompt = f"""You are a security red-teamer agent in the ATMG pipeline.
+    system_prompt = f"""You are a security red-teamer agent in the VIRA pipeline.
 
 Your role: analyze source code and find security vulnerabilities.
 
