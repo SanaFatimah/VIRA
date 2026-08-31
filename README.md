@@ -123,8 +123,15 @@ Replacement configurations use the same commands with either
 
 The campaigns used an NVIDIA GeForce RTX 4090, Ollama, Docker 24.0.5,
 sequential execution, an 8,192-token runtime context, and at most five repair
-iterations. Exact tags, quantization, temperatures, offload settings, and
-Docker limits are in `config/models_and_environment.json`.
+iterations. Complete Ollama IDs and model-blob digests, the complete container
+ID and repository digest, CodeQL pack provenance, seed derivation,
+agent-specific token ceilings, decoding-parameter provenance, and the
+historical unpinned sandbox installation command are in
+`config/models_and_environment.json`. Identifiers in that file are never
+abbreviated. Parameters not explicitly passed by VIRA are distinguished
+between model-definition values and values that relied on Ollama 0.18.3
+defaults. The latter are not assigned guessed numeric values when the effective
+values were not persisted.
 
 Model replacements are comparisons among tested configurations, not isolated
 causal effects of model family. The Vec-B candidate conditions also differ in

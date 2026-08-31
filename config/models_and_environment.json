@@ -1,67 +1,85 @@
 {
-  "hardware": {
-    "gpu": "NVIDIA GeForce RTX 4090",
-    "execution": "sequential",
-    "energy_or_utilization_recorded": false
+  "schema_version": 2,
+  "hardware": {"gpu": "NVIDIA GeForce RTX 4090", "execution": "sequential", "energy_or_utilization_recorded": false},
+  "software": {
+    "ollama_version": "0.18.3",
+    "docker_version": "24.0.5",
+    "docker_build": "24.0.5-0ubuntu1~20.04.1",
+    "orchestrator_python_version": "3.12.9",
+    "sandbox_python_version": "3.12.13",
+    "flask_version": null,
+    "flask_version_note": "Not reconstructable: Flask was installed without a version pin at each sandbox invocation and the resolved version was not persisted.",
+    "ollama_python_client_version": "0.6.1",
+    "langgraph_version": "1.1.3"
+  },
+  "codeql": {
+    "cli_version": "2.25.2",
+    "query_suite": "codeql/python-queries:codeql-suites/python-security-extended.qls",
+    "query_pack": "codeql/python-queries",
+    "query_pack_version": "1.8.0",
+    "query_pack_build_sha": "868ccfbb044e7ff8bff5bcaafd4b5511a500ca23",
+    "python_all_pack_version": "7.0.4"
   },
   "runtime": {
-    "ollama": true,
     "context_length_used": 8192,
     "keep_alive": "24h",
-    "docker_version": "24.0.5",
     "max_iterations": 5,
-    "cvss_threshold": 7.0
+    "cvss_threshold": 7.0,
+    "base_seeds": [42, 43, 44],
+    "seed_derivation_python": "int.from_bytes(hashlib.sha256(f\"{base_seed}:{task_id or ''}:{iteration}:{agent_name}\".encode(\"utf-8\")).digest()[:4], \"big\")",
+    "seed_material": "{base_seed}:{task_id or ''}:{iteration}:{agent_name}",
+    "seed_byte_order": "big",
+    "seed_digest_slice": "first 4 bytes of SHA-256"
   },
   "models": {
     "primary_generator": {
-      "tag": "qwen3-coder-next:q4_K_M",
-      "parameters": "79.7B",
-      "quantization": "Q4_K_M",
-      "temperature": 0.7,
-      "recorded_gpu_layers": 20
-    },
-    "deepseek_generator": {
-      "tag": "deepseek-coder-v2:16b",
-      "parameters": "15.7B",
-      "quantization": "Q4_0",
-      "temperature": 0.7,
-      "recorded_gpu_layers": 99
-    },
-    "devstral_generator": {
-      "tag": "devstral:24b",
-      "parameters": "23.6B",
-      "quantization": "Q4_K_M",
-      "temperature": 0.7,
-      "recorded_gpu_layers": 99
+      "tag": "qwen3-coder-next:q4_K_M", "ollama_id": "ca06e9e4087c",
+      "blob_digest": "sha256:30e51a7cb1cf1333b9e298b90b4c7790fe2572d8736b002482a0ac96328a2ffb",
+      "parameters": "79.7B", "quantization": "Q4_K_M", "native_context_length": 262144, "recorded_gpu_layers": 20,
+      "model_definition_parameters": {"top_p": 0.95, "top_k": 40, "temperature": 1.0}, "ollama_default_parameters": ["repeat_penalty"]
     },
     "primary_analyst_and_attacker_base": {
-      "tag": "qwen3:32b",
-      "parameters": "32.8B",
-      "quantization": "Q4_K_M",
-      "native_context_length": 40960,
-      "analyst_temperature": 0.1,
-      "attacker_temperature": 0.85,
-      "recorded_gpu_layers": 99
+      "tag": "qwen3:32b", "ollama_id": "030ee887880f",
+      "blob_digest": "sha256:3291abe70f16ee9682de7bfae08db5373ea9d6497e614aaad63340ad421d6312",
+      "parameters": "32.8B", "quantization": "Q4_K_M", "native_context_length": 40960, "recorded_gpu_layers": 99,
+      "model_definition_parameters": {"top_p": 0.95, "top_k": 20, "repeat_penalty": 1.0, "temperature": 0.6, "stop": ["<|im_start|>", "<|im_end|>"]}, "ollama_default_parameters": []
     },
     "gemma2_analyst": {
-      "tag": "gemma2:27b",
-      "parameters": "27.2B",
-      "quantization": "Q4_0",
-      "native_context_length": 8192,
-      "temperature": 0.1,
-      "recorded_gpu_layers": 99
+      "tag": "gemma2:27b", "ollama_id": "53261bc9c192",
+      "blob_digest": "sha256:d7e4b00a7d7a8d03d4eed9b0f3f61a427e9f0fc5dea6aeb414e41dee23dc8ecc",
+      "parameters": "27.2B", "quantization": "Q4_0", "native_context_length": 8192, "recorded_gpu_layers": 99,
+      "model_definition_parameters": {"stop": ["<start_of_turn>", "<end_of_turn>"]}, "ollama_default_parameters": ["top_p", "top_k", "repeat_penalty"]
+    },
+    "deepseek_generator": {
+      "tag": "deepseek-coder-v2:16b", "ollama_id": "63fb193b3a9b",
+      "blob_digest": "sha256:5ff0abeeac1d2dbdd5455c0b49ba3b29a9ce3c1fb181b2eef2e948689d55d046",
+      "parameters": "15.7B", "quantization": "Q4_0", "native_context_length": 163840, "recorded_gpu_layers": 99,
+      "model_definition_parameters": {"stop": ["User:", "Assistant:"]}, "ollama_default_parameters": ["top_p", "top_k", "repeat_penalty"]
+    },
+    "devstral_generator": {
+      "tag": "devstral:24b", "ollama_id": "9bd74193e939",
+      "blob_digest": "sha256:b3a2c9a8fef9be8d2ef951aecca36a36b9ea0b70abe9359eab4315bf4cd9be01",
+      "parameters": "23.6B", "quantization": "Q4_K_M", "native_context_length": 131072, "recorded_gpu_layers": 99,
+      "model_definition_parameters": {}, "ollama_default_parameters": ["top_p", "top_k", "repeat_penalty"]
     }
   },
+  "application_decoding_overrides": {
+    "generator": {"temperature": 0.7, "num_predict": "2560 at iteration 0; min(2560 + iteration * 512, 4096) thereafter", "maximum_num_predict": 4096},
+    "attacker": {"temperature": 0.85, "num_predict": 2048, "maximum_num_predict": 2048},
+    "analyst": {"temperature": 0.1, "num_predict": "12288 on the first attempt with at most 3 attacks; 14336 on the first attempt with more than 3 attacks; 16384 on retry", "maximum_num_predict": 16384},
+    "precedence_note": "These application values override same-named model-definition values. VIRA did not explicitly pass top_p, top_k, or repeat_penalty. Those values came from the model definition when listed above; otherwise they relied on Ollama 0.18.3 defaults, whose effective numeric values were not persisted in task records."
+  },
   "docker_sandbox": {
-    "python_image": "python:3.12-slim",
-    "network": "none",
-    "memory": "512m",
-    "cpus": "0.5",
-    "tmpfs": "/tmp:size=128m",
-    "container_lifecycle": "docker run --rm"
+    "image_tag": "python:3.12-slim",
+    "image_id": "sha256:fb1118f126b507965df3c46fdfc52312dfd5262e7b6652ef510bd9298f69a6bc",
+    "repository_digest": "python@sha256:3d5ed973e45820f5ba5e46bd065bd88b3a504ff0724d85980dcd05eab361fcf4",
+    "network": "bridge", "memory": "512m", "cpus": "0.5", "tmpfs": "/tmp:size=128m", "container_lifecycle": "docker run --rm",
+    "unpinned_install_and_execute_command": "pip install bcrypt flask requests sqlalchemy cryptography passlib pyjwt argon2-cffi werkzeug --root-user-action=ignore -q 2>/dev/null ; python /sandbox/target.py",
+    "provenance_note": "This runtime path is implemented in src/tools/sandbox.py. The repository Dockerfile documents a reproducibility-oriented replacement but was not the image path used by the archived campaigns."
   },
   "notes": [
     "The configurations differ in model size, quantization, and GPU offload; comparisons are configuration comparisons, not isolated model-family effects.",
-    "No GPU utilization, energy, or monetary-cost measurements were recorded."
+    "No GPU utilization, energy, or monetary-cost measurements were recorded.",
+    "A null value denotes information that cannot be reconstructed from the archived environment; it is not an inferred value."
   ]
 }
