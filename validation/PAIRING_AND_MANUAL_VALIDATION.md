@@ -2,14 +2,19 @@
 
 ## Exhaustive record checks
 
-The reproduction script audits 366 task rows across eight paired comparisons:
-three seeds, the full suite, one Analyst replacement, two Generator
-replacements, and the diagnostic Vec-B candidate.
+The structural pairing audit covers 296 task rows across six paired
+comparisons: three seeds, the full suite, one Analyst replacement, and the
+diagnostic Vec-B candidate. The two Generator comparisons are not included in
+this 296-row audit. They are calculated separately from 70 additional task
+rows (35 per tested Generator configuration). The reproduction script emits a
+combined 366-row CSV only as a convenient container for the 296 audited rows
+and the 70 separately calculated Generator-comparison rows.
 
 - Every off/on task record is present.
 - No task ID is duplicated within a condition.
 - No persisted success occurs without a matching injected Manipulator log.
-- Vec-A reachable sets are identical within every inferential comparison.
+- Vec-A reachable sets are identical within every audited inferential
+  comparison and within each separately calculated Generator comparison.
 - Common-reachable counts are 17, 16, and 15 across seeds 42–44; 55 in the
   full suite; 16 for Gemma2; and 25 for each replacement Generator.
 - The Vec-B candidate has 13 off-reachable, 17 on-reachable, and 13

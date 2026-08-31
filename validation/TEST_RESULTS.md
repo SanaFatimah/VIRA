@@ -16,11 +16,14 @@ Result:
 comparisons=8 task_rows=366 verification_failures=0
 ```
 
-The verified comparisons cover the three primary seeds, the 121-task full
-suite, the replacement Analyst, the two replacement Generator configurations,
-and the explicitly diagnostic Vec-B candidate pairing. Exact two-sided McNemar
-tests, Holm adjustments, Wilson intervals, and table values are recomputed from
-the sanitized task records.
+The 296-row structural audit covers the three primary seeds, the 121-task full
+suite, the replacement Analyst, and the explicitly diagnostic Vec-B candidate
+pairing. The two replacement Generator comparisons are calculated separately
+from 70 additional task rows. The command reports 366 rows because its output
+CSV combines both scopes; this must not be described as a 366-row structural
+audit or as a 296-row audit that includes the Generator comparisons. Exact
+two-sided McNemar tests, Holm adjustments, Wilson intervals, and table values
+are recomputed from the sanitized task records.
 
 ## Record integrity
 
