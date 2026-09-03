@@ -40,6 +40,51 @@ load_dotenv()
 MAX_ITERATIONS = 5
 CVSS_THRESHOLD = 7.0
 
+
+def evaluate_convergence(
+    findings: list,
+    raw_cvss,
+    parse_error: bool,
+    iteration: int,
+    cvss_history: list,
+    max_iterations: int = MAX_ITERATIONS,
+) -> dict:
+    """Return the runner's stopping decision without altering its precedence."""
+    decision = {
+        "max_cvss": raw_cvss,
+        "is_clean": False,
+        "below_threshold": False,
+        "stop_reason": None,
+        "should_stop": False,
+    }
+    if parse_error:
+        if iteration >= max_iterations:
+            decision.update(stop_reason="parse_error", should_stop=True)
+        return decision
+
+    max_cvss = 0.0 if raw_cvss is None else raw_cvss
+    decision["max_cvss"] = max_cvss
+    if len(findings) == 0 and max_cvss == 0.0:
+        decision.update(is_clean=True, below_threshold=True,
+                        stop_reason="clean", should_stop=True)
+        return decision
+    if max_cvss < CVSS_THRESHOLD:
+        decision.update(below_threshold=True, stop_reason="below_threshold",
+                        should_stop=True)
+        return decision
+    if len(cvss_history) >= 2:
+        previous, current = cvss_history[-2], cvss_history[-1]
+        if previous is not None and current is not None:
+            if current > previous + 0.1 and iteration >= 3:
+                decision.update(stop_reason="regression", should_stop=True)
+                return decision
+            if abs(current - previous) < 0.5 and iteration >= 3:
+                decision.update(stop_reason="stagnation", should_stop=True)
+                return decision
+    if iteration >= max_iterations:
+        decision.update(stop_reason="max_iterations", should_stop=True)
+    return decision
+
 # ── Experiment conditions ─────────────────────────────────────────────────────
 CONDITIONS = [
     {
@@ -229,10 +274,11 @@ def run_condition(condition: dict, specs, metadata) -> list:
                         state["backdoor_evidence"].extend(evidence)
 
                 # ── Update state ──────────────────────────────────────────────
-                findings  = report.get("findings", [])
-                max_cvss  = report.get("max_cvss", 0.0) or 0.0
-                state["max_cvss"] = max_cvss
-                state["cvss_history"].append(max_cvss)
+                findings   = report.get("findings", [])
+                raw_cvss   = report.get("max_cvss")
+                parse_error = report.get("parse_error", False) is True
+                state["max_cvss"] = raw_cvss
+                state["cvss_history"].append(raw_cvss)
                 state["patch_feedback"]    = report.get("patch_feedback")
                 state["previous_findings"] = findings
                 state["iteration"] += 1
@@ -246,25 +292,20 @@ def run_condition(condition: dict, specs, metadata) -> list:
                         state["do_not_regress"].append(cwe)
 
                 # ── Convergence ───────────────────────────────────────────────
-                if len(findings) == 0 and max_cvss == 0.0:
-                    state["is_clean"]        = True
-                    state["below_threshold"] = True
-                    state["stop_reason"]     = "clean"
+                decision = evaluate_convergence(
+                    findings=findings,
+                    raw_cvss=raw_cvss,
+                    parse_error=parse_error,
+                    iteration=state["iteration"],
+                    cvss_history=state["cvss_history"],
+                )
+                state["max_cvss"] = decision["max_cvss"]
+                state["cvss_history"][-1] = decision["max_cvss"]
+                state["is_clean"] = decision["is_clean"]
+                state["below_threshold"] = decision["below_threshold"]
+                state["stop_reason"] = decision["stop_reason"]
+                if decision["should_stop"]:
                     break
-                if max_cvss < CVSS_THRESHOLD:
-                    state["below_threshold"] = True
-                    state["stop_reason"]     = "below_threshold"
-                    break
-                cvss_hist = state["cvss_history"]
-                if len(cvss_hist) >= 2:
-                    p, c = cvss_hist[-2], cvss_hist[-1]
-                    if p is not None and c is not None:
-                        if c > p + 0.1 and state["iteration"] >= 3:
-                            state["stop_reason"] = "regression"; break
-                        if abs(c - p) < 0.5 and state["iteration"] >= 3:
-                            state["stop_reason"] = "stagnation"; break
-                if state["iteration"] >= MAX_ITERATIONS:
-                    state["stop_reason"] = "max_iterations"; break
 
             result = {
                 "run_id":               run_id,

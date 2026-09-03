@@ -576,7 +576,7 @@ def convergence_node(state: VIRAState) -> dict:
         print(f"  Decision      : BELOW THRESHOLD (CVSS {max_cvss:.1f} < {CVSS_THRESHOLD})"
               f" — {'saving' if len(findings)==0 else 'findings remain but below threshold'}")
         # is_clean only if truly zero findings; otherwise we're just below threshold
-        truly_clean = len(findings) == 0
+        truly_clean = len(findings) == 0 and max_cvss == 0.0
         return {"is_clean": truly_clean, "below_threshold": True,
                 "stop_reason": "clean" if truly_clean else "below_threshold",
                 "stagnation_detected": stagnation_detected,
