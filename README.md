@@ -1,4 +1,4 @@
-# VIRA IST Anonymous Replication Artifact
+# VIRA IST Replication Artifact
 
 This package is a journal-specific, anonymous replication artifact for the
 VIRA manuscript. It is independent of earlier conference artifacts and contains
