@@ -1,6 +1,6 @@
 # VIRA IST Replication Artifact
 
-This package is a journal-specific, anonymous replication artifact for the
+This package is a journal-specific, replication artifact for the
 VIRA manuscript. It is independent of earlier conference artifacts and contains
 no repository history, author metadata, institutional metadata, or upload URL.
 
@@ -52,7 +52,7 @@ data/           exact 35- and 121-task lists plus sanitized task records
 docker/         sandbox image/configuration material
 docs/           prompt and data documentation
 src/            VIRA agents, guards, Manipulators, pipeline, and tools
-validation/     record-validation and anonymity-audit material
+validation/     record-validation and audit material
 ```
 
 See `ARTIFACT_MANIFEST.md` for the precise study-to-directory mapping.
@@ -138,19 +138,6 @@ causal effects of model family. The Vec-B candidate conditions also differ in
 Vector-A activation and therefore remain diagnostic rather than an isolated
 Guard-B estimate.
 
-## Anonymity audit
-
-Run:
-
-```bash
-python3 validation/audit_anonymity.py
-```
-
-The audit checks file contents and names for email addresses, known development
-user/workspace tokens, local-machine path prefixes, conference-artifact terms,
-submission identifiers, and old anonymous-artifact URLs. Generic `/home`
-strings inside SecurityEval benchmark programs are preserved as task content
-and are not development-machine paths.
 
 ## Known limitations
 
